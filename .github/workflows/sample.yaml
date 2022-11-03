@@ -16,5 +16,5 @@ jobs:
 
       - run: node test.js
         env:
-          BROWSERSTACK_BUILD_ID: DP-SIT
-          BROWSERSTACK_PROJECT_NAME: SMOKE
+          BROWSERSTACK_BUILD_ID: {{ secrets.BROWSERSTACK_BUILD_ID }}
+          BROWSERSTACK_PROJECT_NAME: {{ secrets.BROWSERSTACK_PROJECT_NAME }}
