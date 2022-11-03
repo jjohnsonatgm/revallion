@@ -1,0 +1,11 @@
+{
+  "src": [
+    "./test.js"
+  ],
+  "hostname": "localhost",
+  "ports": "9000,9100",
+  "pageLoadTimeout": 20000,
+  "selectorTimeout": 20000,
+  "disableMultipleWindows": true,
+  "skipJsErrors": true
+}
