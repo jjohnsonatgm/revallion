@@ -1,5 +1,4 @@
 require('dotenv').config();
-import { t } from 'testcafe';
 
 console.log('Test');
 console.log(process.env.BROWSERSTACK_BUILD_ID);
