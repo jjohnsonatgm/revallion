@@ -3,30 +3,23 @@ run-name: ${{ github.actor }} is learning Github Actions
 on: [push]
 
 jobs:
-  initializeDependencies:
-    uses: ./.github/workflows/setup-tests.yml
-    secrets: inherit
-
   executeTests:
-    needs: initializeDependencies
     strategy:
       matrix:
         browser: ["browserstack:chrome@103.0:Windows 10", "browserstack:chrome@104.0:Windows 10"]
 
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
+          node-version: '14'
+
+      - run: npm install
 
       - run: npm install -g testcafe
 
-      - run: echo '${{ toJSON(runner) }}'
       - run: testcafe '${{ matrix.browser }}' --config-file=./.testcaferc.js
         env:
           BROWSERSTACK_BUILD_ID: ${{ secrets.BROWSERSTACK_BUILD_ID }}
