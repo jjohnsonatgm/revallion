@@ -8,6 +8,7 @@ jobs:
     secrets: inherit
 
   executeTests:
+    needs: initializeDependencies
     strategy:
       matrix:
         browser: ["browserstack:chrome@103.0:Windows 10", "browserstack:chrome@104.0:Windows 10"]
