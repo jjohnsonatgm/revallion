@@ -5,9 +5,6 @@ on:
 
 jobs:
   initialize-dependencies:
-
-    runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
 
