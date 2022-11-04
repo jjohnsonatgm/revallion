@@ -24,6 +24,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
 
+      - run: npm install -g testcafe
+
       - run: echo '${{ toJSON(runner) }}'
       - run: testcafe '${{ matrix.browser }}' --config-file=./.testcaferc.js
         env:
