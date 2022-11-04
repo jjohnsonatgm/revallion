@@ -1,0 +1,16 @@
+name: initialize tests
+run-name: ${{ github.actor }} is learning re usable workflows
+on:
+  workflow_call:
+
+jobs:
+  initialize-dependencies:
+    - uses: actions/checkout@v3
+
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '14'
+
+    - run: npm install
+
+    - run: npm install -g testcafe
