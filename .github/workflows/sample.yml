@@ -15,6 +15,7 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
+      - run: echo '${{ toJSON(runner) }}'
       - run: testcafe '${{ matrix.browser }}' --config-file=./.testcaferc.js
         env:
           BROWSERSTACK_BUILD_ID: ${{ secrets.BROWSERSTACK_BUILD_ID }}
