@@ -3,23 +3,19 @@ run-name: ${{ github.actor }} is learning Github Actions
 on: [push]
 
 jobs:
-  learn:
+  initializeDependencies:
+    uses: greatmindsorg/dp-sit-automation/.github/workflows/setup-tests.yaml
+    with:
+      secrets: inherit
+
+  executeTests:
     strategy:
       matrix:
         browser: ["browserstack:chrome@103.0:Windows 10", "browserstack:chrome@104.0:Windows 10"]
+
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '14'
-
-      - run: npm install
-
-      - run: npm install -g testcafe
-
-      - run: testcafe '${{ matrix.browser }}' --config-file=./.testcaferc-browserstack.json
+      - run: testcafe '${{ matrix.browser }}' --config-file=./.testcaferc.js
         env:
           BROWSERSTACK_BUILD_ID: ${{ secrets.BROWSERSTACK_BUILD_ID }}
           BROWSERSTACK_PROJECT_NAME: ${{ secrets.BROWSERSTACK_PROJECT_NAME }}

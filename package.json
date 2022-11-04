@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "testcafe 'browserstack:chrome@103.0:Windows 10' --config-file=./.testcaferc-browserstack.json"
+    "local": "testcafe chrome test.js --config-file=./.testcaferc.js",
+    "test": "testcafe 'browserstack:chrome@103.0:Windows 10' --config-file=./.testcaferc-browserstack.json",
+    "safari": "testcafe 'browserstack:safari@15.6:OS X Monterey' --config-file=./.testcaferc-browserstack.json"
   },
   "repository": {
     "type": "git",
