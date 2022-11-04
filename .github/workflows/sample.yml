@@ -3,8 +3,6 @@ run-name: ${{ github.actor }} is learning Github Actions
 on: [push]
 
 jobs:
-  runs-on: ubuntu-latest
-
   initializeDependencies:
     uses: ./.github/workflows/setup-tests.yml
     secrets: inherit
@@ -15,6 +13,7 @@ jobs:
       matrix:
         browser: ["browserstack:chrome@103.0:Windows 10", "browserstack:chrome@104.0:Windows 10"]
 
+    runs-on: ubuntu-latest
     steps:
       - run: testcafe '${{ matrix.browser }}' --config-file=./.testcaferc.js
         env:

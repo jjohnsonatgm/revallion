@@ -4,6 +4,8 @@ on:
   workflow_call:
 
 jobs:
+  runs-on: ubuntu-latest
+
   initialize-dependencies:
     steps:
     - uses: actions/checkout@v3
@@ -15,3 +17,12 @@ jobs:
     - run: npm install
 
     - run: npm install -g testcafe
+
+    - uses: actions/cache@v3
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
