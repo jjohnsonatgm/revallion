@@ -4,6 +4,7 @@ on:
   workflow_call:
 
 jobs:
+
   runs-on: ubuntu-latest
 
   initialize-dependencies:
