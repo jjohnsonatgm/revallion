@@ -4,10 +4,10 @@ on:
   workflow_call:
 
 jobs:
-
-  runs-on: ubuntu-latest
-
   initialize-dependencies:
+
+    runs-on: ubuntu-latest
+
     steps:
     - uses: actions/checkout@v3
 
