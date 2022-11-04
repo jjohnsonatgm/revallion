@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   initializeDependencies:
-    uses: greatmindsorg/revallion/.github/workflows/setup-tests.yaml@main
+    uses: ./.github/workflows/setup-tests.yaml
     with:
       secrets: inherit
 
