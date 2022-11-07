@@ -16,7 +16,9 @@ jobs:
         with:
           node-version: '14'
 
-      - uses: actions/cache@v3
+      - name: Cache Node Modules
+        id: myCacheStep
+        uses: actions/cache@v3
         env:
           cache-name: cache-node-modules
         with:
