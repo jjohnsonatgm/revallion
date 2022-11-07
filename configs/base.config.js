@@ -1,6 +1,6 @@
-export const baseConfig = {
+const baseConfig = {
   src: [
-    "./test.js"
+    "./src/fixtures/test.js"
   ],
   screenshots: {
     takeOnFails: true,
@@ -11,3 +11,7 @@ export const baseConfig = {
   disableMultipleWindows: true,
   skipJsErrors: true
 }
+
+module.exports = {
+  baseConfig
+};

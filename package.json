@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "local": "testcafe chrome test.js --config-file=./.testcaferc.js",
+    "local": "node_modules/.bin/testcafe --config-file=./configs/.local-testcaferc.js",
     "test": "testcafe 'browserstack:chrome@103.0:Windows 10' --config-file=./.testcaferc-browserstack.json",
-    "safari": "testcafe 'browserstack:safari@15.6:OS X Monterey' --config-file=./.testcaferc-browserstack.json"
+    "safari": "testcafe --config-file=./configs/.remote-testcaferc.js"
   },
   "repository": {
     "type": "git",

@@ -16,11 +16,20 @@ jobs:
         with:
           node-version: '14'
 
-      - run: npm install
+      - uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
 
-      - run: npm install -g testcafe
+      - name: Install Dependencies
+        if: steps.myCacheStep.outputs.cache-hit != 'true'
+        run: npm install
 
-      - run: testcafe '${{ matrix.browser }}' --config-file=./.testcaferc.js
+      - run: node_modules/.bin/testcafe '${{ matrix.browser }}' --config-file=./configs/.remote-testcaferc.js
         env:
           BROWSERSTACK_BUILD_ID: ${{ secrets.BROWSERSTACK_BUILD_ID }}
           BROWSERSTACK_PROJECT_NAME: ${{ secrets.BROWSERSTACK_PROJECT_NAME }}
