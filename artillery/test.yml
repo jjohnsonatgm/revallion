@@ -1,0 +1,26 @@
+config:
+  target: "https://digital.uat.greatminds.dev"
+  phases:
+    - duration: 10
+      arrivalRate: 5
+      name: Warm up
+  environments:
+    UAT: "https://digital.uat.greatminds.dev"
+  payload:
+    path: "./data/users.csv"
+    fields:
+      - "username"
+      - "password"
+    loadAll: true
+    name: auth
+  plugins:
+    ensure: {}
+scenarios:
+  - flow:
+    - log: "Current environment is set to: {{ $environment }}"
+    - post:
+        url: "https://cognito-idp.us-east-1.amazonaws.com/"
+        json:
+          username: "{{ $loopElement.username }}"
+          password: "{{ $loopElement.password }}"
+    over: auth

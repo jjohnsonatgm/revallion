@@ -31,13 +31,6 @@ jobs:
         if: steps.myCacheStep.outputs.cache-hit != 'true'
         run: npm install
 
-      - name: Print out directory
-        run: |
-          ls -la
-          cd node_modules
-          cd .bin
-          ls -la
-
       - run: node_modules/.bin/testcafe '${{ matrix.browser }}' --config-file=./configs/.remote-testcaferc.js
         env:
           BROWSERSTACK_BUILD_ID: ${{ secrets.BROWSERSTACK_BUILD_ID }}
