@@ -1,11 +1,11 @@
 config:
   target: "https://digital.uat.greatminds.dev"
   phases:
-    - duration: 2
+    - duration: 1
       arrivalRate: 1
-      name: Warm up
-before:
-  flow:
+      name: Simulate a login
+scenarios:
+  - flow:
     - post:
        url: "https://cognito-idp.us-east-1.amazonaws.com/"
        headers:
@@ -24,9 +24,19 @@ before:
        capture:
          - json: "$.AuthenticationResult.AccessToken"
            as: "token"
-scenarios:
-  - flow:
     - get:
         url: "https://digital.uat.greatminds.dev/roster/profile"
         headers:
           authorization: "Bearer {{ token }}"
+    - post:
+        url: "https://digital.uat.greatminds.dev/auth/exchange"
+        headers:
+          origin: "https://digital.uat.greatminds.dev"
+          referer: "https://digital.uat.greatminds.dev/login/email"
+          authorization: "Bearer {{ token }}"
+          content-length: 0
+    - get:
+        url: "https://digital.uat.greatminds.dev/license/api/v2/licenses?pagination=off"
+        headers:
+          authorization: "Bearer {{ token }}"
+          active_role: "teacher"
