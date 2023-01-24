@@ -1,26 +1,32 @@
 config:
   target: "https://digital.uat.greatminds.dev"
   phases:
-    - duration: 10
-      arrivalRate: 5
+    - duration: 2
+      arrivalRate: 1
       name: Warm up
-  environments:
-    UAT: "https://digital.uat.greatminds.dev"
-  payload:
-    path: "./data/users.csv"
-    fields:
-      - "username"
-      - "password"
-    loadAll: true
-    name: auth
-  plugins:
-    ensure: {}
+before:
+  flow:
+    - post:
+       url: "https://cognito-idp.us-east-1.amazonaws.com/"
+       headers:
+         origin: "https://digital.uat.greatminds.dev"
+         referer: "https://digital.uat.greatminds.dev/"
+         x-amz-target: "AWSCognitoIdentityProviderService.InitiateAuth"
+         x-amz-user-agent: "aws-amplify/5.0.4 js"
+         content-type: "application/x-amz-json-1.1"
+       json:
+         AuthFlow: "USER_PASSWORD_AUTH"
+         AuthParameters: {
+           USERNAME: "sit_em2_t1@yopmail.com",
+           PASSWORD: "Test@123"
+         }
+         ClientId: "2r3uis8scsqvi3gm9luh9upb2t"
+       capture:
+         - json: "$.AuthenticationResult.AccessToken"
+           as: "token"
 scenarios:
   - flow:
-    - log: "Current environment is set to: {{ $environment }}"
-    - post:
-        url: "https://cognito-idp.us-east-1.amazonaws.com/"
-        json:
-          username: "{{ $loopElement.username }}"
-          password: "{{ $loopElement.password }}"
-    over: auth
+    - get:
+        url: "https://digital.uat.greatminds.dev/roster/profile"
+        headers:
+          authorization: "Bearer {{ token }}"
